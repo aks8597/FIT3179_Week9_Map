@@ -1,0 +1,81 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 500,
+  "title": "Cost of Living Concern Index Across Australian States and Territories (April-May 2024)",
+  "background": "lightblue",
+  "layer": [
+    {
+      "data": {"graticule": true},
+      "mark": {
+        "type": "geoshape",
+        "fill": null,
+        "stroke": "white",
+        "strokeWidth": 0.5,
+        "opacity": 0.4
+      }
+    },
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/world-110m.json",
+        "format": {"type": "topojson", "feature": "land"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "lightblue",
+        "stroke": "white",
+        "strokeWidth": 0.3
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/aks8597/FIT3179_Week9_Map/refs/heads/main/australian_states_simplified.topojson",
+        "format": {"type": "topojson", "feature": "STE_2021_AUST_GDA2020"}
+      },
+      "transform": [
+        {
+          "lookup": "properties.STE_NAME21",
+          "from": {
+            "data": {
+              "values": [
+                {"State": "New South Wales", "Concern_Index": 65.63},
+                {"State": "Victoria", "Concern_Index": 76.13},
+                {"State": "Queensland", "Concern_Index": 84.38},
+                {"State": "South Australia", "Concern_Index": 74.75},
+                {"State": "Western Australia", "Concern_Index": 57.88},
+                {"State": "Tasmania", "Concern_Index": 25},
+                {"State": "Northern Territory", "Concern_Index": 18.5},
+                {
+                  "State": "Australian Capital Territory",
+                  "Concern_Index": 32.13
+                }
+              ]
+            },
+            "key": "State",
+            "fields": ["Concern_Index"]
+          }
+        }
+      ],
+      "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.8},
+      "encoding": {
+        "color": {
+          "field": "Concern_Index",
+          "type": "quantitative",
+          "scale": {"scheme": "reds"},
+          "legend": {"title": "Concern Index"}
+        },
+        "tooltip": [
+          {"field": "properties.STE_NAME21", "title": "State/Territory"},
+          {
+            "field": "Concern_Index",
+            "type": "quantitative",
+            "title": "Concern Index",
+            "format": ".2f"
+          }
+        ]
+      }
+    }
+  ],
+  "projection": {"type": "equirectangular", "scale": 700, "center": [133, -27]},
+  "config": {}
+}
