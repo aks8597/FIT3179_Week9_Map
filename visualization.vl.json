@@ -1,0 +1,36 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 500,
+  "title": "Cost of Living Concern Index Across Australian States and Territories (April-May 2024)",
+  "data": {
+    "url": "https://raw.githubusercontent.com/aks8597/FIT3179_Week9_Map/refs/heads/main/australian_states_simplified.topojson",
+    "format": {"type": "topojson", "feature": "STE_2021_AUST_GDA2020"}
+  },
+  "transform": [
+    {
+      "calculate": "{'New South Wales': 65.63, 'Victoria': 76.13, 'Queensland': 84.38, 'South Australia': 74.75, 'Western Australia': 57.88, 'Tasmania': 25, 'Northern Territory': 18.5, 'Australian Capital Territory': 32.13}[datum.properties.STE_NAME21]",
+      "as": "Concern_Index"
+    }
+  ],
+  "projection": {"type": "equirectangular"},
+  "mark": "geoshape",
+  "encoding": {
+    "color": {
+      "field": "Concern_Index",
+      "type": "quantitative",
+      "scale": {"scheme": "reds"},
+      "legend": {"title": "Concern Index"}
+    },
+    "tooltip": [
+      {"field": "properties.STE_NAME21", "title": "State/Territory"},
+      {
+        "field": "Concern_Index",
+        "type": "quantitative",
+        "title": "Concern Index",
+        "format": ".2f"
+      }
+    ]
+  },
+  "config": {}
+}
